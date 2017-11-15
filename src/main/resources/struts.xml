@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 配置struts属性 -->
+	<!-- 乱码解决 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<!-- 设置开发模式--> 
+	<constant name="struts.devMode" value="true"/>
+	<!-- 设置配置文件修改后自动加载 -->
+	<constant name="struts.i18n.reload" value="true"></constant>
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- 该属性设置浏览器是否缓存静态内容.当应用处于开发阶段时,我们希望每次请求都获得服务器的最新响应,则可设置该属性为false. -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<!--设置对应的扩展名-->
+	<constant name="struts.action.extensionaction" value="action,,cloudoer"></constant>
+	
+	
+	
+	<!-- 通过include添加不同人员的配置文件-->
+	<include file="cloudoer/hr/action/*Struts.xml"></include>
+
+	
+</struts>

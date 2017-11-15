@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="manage" namespace="/manage" extends="struts-default">
+		<action name="addUI" class="manageAction" method="addUI">
+			<result name="success">/WEB-INF/view/manage/add.jsp</result>
+		</action>
+		<action name="updateUI" class="manageAction" method="updateUI">
+			<result name="success">/WEB-INF/view/manage/add.jsp</result>
+		</action>
+		<action name="showUI" class="manageAction" method="showUI">
+			<result name="success">/WEB-INF/view/manage/show.jsp</result>
+		</action>
+		<action name="getHouseAll" class="manageAction" method="getHouseAll"></action>
+		<action name="getHousePage" class="manageAction" method="getHousePage"></action>
+		<action name="addHouse" class="manageAction" method="addHouse">
+			<result name="failure" type="redirectAction">addUI</result>
+			<result name="success" type="redirectAction">
+    			<param name="namespace">/login</param>
+				<param name="actionName">manage</param>
+			</result>
+		</action>
+		<action name="updateHouse" class="manageAction" method="updateHouse">
+			<result name="success" type="redirectAction">
+    			<param name="namespace">/login</param>
+				<param name="actionName">manage</param>
+			</result>
+		</action>
+		<action name="getHouseById" class="manageAction" method="getHouseById"></action>
+		<action name="deleteHouse" class="manageAction" method="deleteHouse"></action>
+		<action name="getHouseCount" class="manageAction" method="getHouseCount"></action>
+	</package>
+</struts>

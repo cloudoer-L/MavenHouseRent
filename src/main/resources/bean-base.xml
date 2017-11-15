@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	
+	<!-- 所有配置的公共部分 -->
+	
+	<!-- 1) 连接池实例 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+		<property name="jdbcUrl" value="jdbc:sqlserver://localhost:1433;databaseName=HouseRent"></property>
+		<property name="user" value="sa"></property>
+		<property name="password" value="123456"></property>
+		<property name="initialPoolSize" value="3"></property>
+		<property name="maxPoolSize" value="6"></property>
+	</bean>
+
+	<!-- 2) SessionFactory实例创建 -->
+	<!-- 所有的配置都由spring维护(项目中不需要hibernate.cfg.xml啦) -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<!-- a. 连接池 -->
+		<property name="dataSource" ref="dataSource"></property>
+		
+		<!-- b. hibernate常用配置： 方言、显示sql、自动建表等 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- 配置hibernate不使用jdbc连接 -->
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+				<!-- 默认为auto，报错Error applying BeanValidation relational constraints -->
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
+		
+		<!-- c. 映射配置 -->
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:cloudoer/hr/entity/*.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 配置事务bean -->
+	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 开启bean注解扫描 -->
+	<context:component-scan base-package="cloudoer.hr.*"></context:component-scan>
+	
+	<!-- 配置使用Cglib代理 -->
+	<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+	<!-- 注解方式实现事务： 指定注解方式实现事务 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+	
+</beans>     
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="login" namespace="/login" extends="struts-default">
+		<action name="view" class="loginAction" method="view">
+			<result name="success">/WEB-INF/view/login/login.jsp</result>
+		</action>
+		<action name="login" class="loginAction" method="login">
+			<result name="manage" type="redirectAction">manage</result>
+			<result name="customer" type="redirectAction">manage</result>
+			<result name="login" type="redirectAction">view</result>
+		</action>
+		<action name="manage" class="loginAction" method="manage">
+			<result name="success">/WEB-INF/view/manage/manage.jsp</result>
+		</action>
+		<action name="customer" class="loginAction" method="customer">
+			<result name="success">/WEB-INF/view/customer/customer.jsp</result>
+		</action>
+	</package>
+</struts>
